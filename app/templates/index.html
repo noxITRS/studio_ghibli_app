@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<input class="form-control" id="search_input" type="text" placeholder="Search..">
+<ul id="films" class="list-group">
+    {% for film in films %}
+    <a class="list-group-item list-group-item-action" href="/films/{{ film.id }}">{{ film.title }}</a>
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+    $(document).ready(function () {
+        $("#search_input").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#films a").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+{% endblock %}
